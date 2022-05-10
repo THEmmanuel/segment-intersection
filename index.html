@@ -45,32 +45,19 @@
 		context.lineTo(D.x, D.y);
 
 		context.stroke();
-		const drawDot = (point, label) => {
-			context.beginPath();
-			context.fillStyle = 'white';
-			context.arc(point.x, point.y, 10, 0, Math.PI * 2);
-			context.fill();
-			context.stroke();
-			context.fillStyle = "black";
-			context.textAlign = 'center';
-			context.textBbaseline = 'middle';
-			context.font = 'bold 14px';
-			context.fillText = (label, point.x, point.y);
-		}
 
-		const linearInterpolation = (A, B, t) => {
-			return A + (B - A) * t;
-		}
+		context.beginPath();
+		context.fillStyle = 'white';
+		context.arc(A.x, A.y, 10, 0, Math.PI*2);
+		context.fill();
+		context.stroke();
+		context.fillStyle = 'black';
 
-		drawDot(A, 'A');
-		drawDot(B, 'B');
-		drawDot(C, 'C');
-		drawDot(D, 'D');
+		context.textAlign = 'center';
+		context.textBaseline = 'middle';
+		context.font = 'bold 14px Arial'
 
-		const M = {
-			x: linearInterpolation(A.x, B.x, 0.5),
-			y: linearInterpolation(A.y, B.y, 0.5)
-		}
+		context.fillText('A', A.x, A.y);
 	</script>
 
 
