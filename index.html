@@ -38,26 +38,54 @@
 		};
 
 		const context = mainCanvas.getContext('2d')
-		context.beginPath();
-		context.moveTo(A.x, A.y);
-		context.lineTo(B.x, B.y);
-		context.moveTo(C.x, C.y);
-		context.lineTo(D.x, D.y);
 
-		context.stroke();
+		let t = -1;
+		animate()
 
-		context.beginPath();
-		context.fillStyle = 'white';
-		context.arc(A.x, A.y, 10, 0, Math.PI*2);
-		context.fill();
-		context.stroke();
-		context.fillStyle = 'black';
+		function animate() {
+			context.clearRect(0, 0, mainCanvas.width, mainCanvas.height);
+			context.beginPath();
+			context.moveTo(A.x, A.y);
+			context.lineTo(B.x, B.y);
+			context.moveTo(C.x, C.y);
+			context.lineTo(D.x, D.y);
+			context.stroke();
+			drawDot(A, 'A');
+			drawDot(B, 'B');
+			drawDot(C, 'C');
+			drawDot(D, 'D');
+			const midPoint = {
+				x: linearInterpolation(A.x, B.x, t),
+				y: linearInterpolation(A.y, B.y, t)
+			}
 
-		context.textAlign = 'center';
-		context.textBaseline = 'middle';
-		context.font = 'bold 14px Arial'
+			const midPointY = {
+				x: linearInterpolation(C.x, D.x, t),
+				y: linearInterpolation(C.y, D.y, t)
+			}
 
-		context.fillText('A', A.x, A.y);
+			drawDot(midPoint, 'M', t < 0 || t > 1);
+			drawDot(midPointY, 'N', t < 0 || t > 1);
+			t += 0.005;
+			requestAnimationFrame(animate);
+		}
+
+		function linearInterpolation(A, B, t) {
+			return A + (B - A) * t;
+		}
+
+		function drawDot(point, label, isRed) {
+			context.beginPath();
+			context.fillStyle = isRed ? 'red' : 'white';
+			context.arc(point.x, point.y, 10, 0, Math.PI * 2);
+			context.fill();
+			context.stroke();
+			context.fillStyle = 'black';
+			context.textAlign = 'center';
+			context.textBaseline = 'middle';
+			context.font = 'bold 14px Arial'
+			context.fillText(label, point.x, point.y);
+		}
 	</script>
 
 
